@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maghrib Prayer Reminder: An Agentic AI Workflow | Farah Qistina</title>
+<meta name="description" content="Team of 3. We built an autonomous agent on the Make automation platform that works out Maghrib time for each user&#x27;s location and sends them a Telegram reminder, with no human involved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Software & AI · Team project</div>
+  <h1>Maghrib Prayer Reminder: An Agentic AI Workflow</h1>
+  <p class="sub">Team of 3. We built an autonomous agent on the Make automation platform that works out Maghrib time for each user's location and sends them a Telegram reminder, with no human involved.</p>
+  <div class="meta"><div><span>Course</span><b>SKJ3183 Artificial Intelligence</b></div><div><span>Team</span><b>Team of 3</b></div><div><span>Platform</span><b>Make (formerly Integromat)</b></div></div>
+  <div class="chips"><span class="chip">Make</span><span class="chip">Agentic AI</span><span class="chip">REST API</span><span class="chip">Google Sheets</span><span class="chip">Telegram Bot</span><span class="chip">Automation</span><span class="chip">Ethics by design</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>During Ramadan, Maghrib marks both the prayer time and the time to break the fast, so accurate timing really matters. Our agent runs on a schedule, reads each user's location, fetches the live Maghrib time from a prayer-time API, decides whether it's time, and sends one respectful Telegram message.</div>
+
+<h2>Workflow</h2>
+<div class="flow">
+  <div class="n">Scheduled trigger<small>runs on its own</small></div><span class="a">→</span>
+  <div class="n">Google Sheets<small>search user rows</small></div><span class="a">→</span>
+  <div class="n">HTTP request<small>prayer-time API</small></div><span class="a">→</span>
+  <div class="n">Set variables<small>prepare data &amp; message</small></div><span class="a">→</span>
+  <div class="n">Telegram Bot<small>send reminder</small></div>
+</div>
+
+<h2>What makes it "agentic"</h2>
+<table>
+  <tr><th>Characteristic</th><th>How our agent does it</th></tr>
+  <tr><td><b>Autonomy</b></td><td>Runs continuously on a scheduled trigger, with no manual step</td></tr>
+  <tr><td><b>Perception</b></td><td>Fetches real-time Maghrib times from an external prayer-time API</td></tr>
+  <tr><td><b>Context awareness</b></td><td>Uses each user's location from Google Sheets to make location-specific decisions</td></tr>
+  <tr><td><b>Reasoning</b></td><td>Rule-based logic compares the current time with that location's Maghrib time</td></tr>
+  <tr><td><b>Action</b></td><td>Sends the Telegram reminder only when the conditions are met</td></tr>
+</table>
+
+<h2>Ethics and privacy by design</h2>
+<ul>
+  <li><b>Consent:</b> users opt in by submitting their own Telegram chat ID.</li>
+  <li><b>Data minimisation:</b> we store only the data the agent needs (chat ID and location).</li>
+  <li><b>No spam:</b> exactly one message at Maghrib time.</li>
+  <li><b>Cultural sensitivity:</b> message wording was written to respect religious values.</li>
+</ul>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>How to build a working agent from a trigger, perception, a decision and an action using low-code tools.</li>
+  <li>How to connect external services (REST API, Google Sheets, Telegram) and pass data between them reliably.</li>
+  <li>Privacy principles like consent and data minimisation belong in the design from the start, not added at the end. This links directly to my information security studies.</li>
+</ul></div>
+<div class="next"><span><a href="network-security-labs.html">← Network Security Lab Series: Packets, TCP Flags and Email Protocols</a></span><span><a href="smarttcms.html">SmartTCMS: Smart Test Case Management System →</a></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>

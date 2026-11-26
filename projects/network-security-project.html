@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internet Network Security Project: Lightweight IDS with Telegram Alerting | Farah Qistina</title>
+<meta name="description" content="Team of 3. We built a small intrusion-detection setup that recognises four common network attacks and pushes real-time alerts to Telegram.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Detection & defense · Team project</div>
+  <h1>Internet Network Security Project: Lightweight IDS with Telegram Alerting</h1>
+  <p class="sub">Team of 3. We built a small intrusion-detection setup that recognises four common network attacks and pushes real-time alerts to Telegram.</p>
+  <div class="meta"><div><span>Course</span><b>Network Security</b></div><div><span>Team</span><b>Team of 3</b></div><div><span>Format</span><b>Group project + presentation</b></div></div>
+  <div class="chips"><span class="chip">IDS</span><span class="chip">Wireshark</span><span class="chip">Bash</span><span class="chip">Python</span><span class="chip">Telegram Bot API</span><span class="chip">Kali Linux</span><span class="chip">Windows XP</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>We simulated four attacks from a Windows XP machine against a Kali Linux sensor: Ping of Death, ARP spoofing, SMTP banner probing and FTP brute force. A script watched the IDS alert log and forwarded each detection to Telegram.</div>
+
+<h2>Architecture</h2>
+<div class="flow">
+  <div class="n">Windows XP<small>attack simulation</small></div><span class="a">→</span>
+  <div class="n">Kali Linux<small>target + IDS sensor</small></div><span class="a">→</span>
+  <div class="n">Alert log<small>watched by script</small></div><span class="a">→</span>
+  <div class="n">Bash / Python<small>parse + forward</small></div><span class="a">→</span>
+  <div class="n">Telegram<small>analyst notified</small></div>
+</div>
+<div class="grid2">
+  <div class="box"><h4>Why Windows XP?</h4><p>It's lightweight, easy to configure and well suited to a controlled lab where legacy behaviour is useful.</p></div>
+  <div class="box"><h4>Why Kali Linux?</h4><p>It's open source and customisable, with defensive tools (IDS, Wireshark, scripting) already built in.</p></div>
+</div>
+
+<h2>Attacks covered and how we detected them</h2>
+<table>
+  <tr><th>Attack</th><th>What it is</th><th>Detection signal</th></tr>
+  <tr><td><b>Ping of Death</b></td><td>DoS using oversized or malformed ICMP packets that can trigger buffer overflows. This is different from an ICMP <em>flood</em>, which relies on volume.</td><td>ICMP payload size far above normal</td></tr>
+  <tr><td><b>ARP spoofing</b></td><td>Fake ARP replies link the attacker's MAC address to a legitimate IP (often the gateway), redirecting traffic through the attacker.</td><td>One IP suddenly mapped to a different MAC; gratuitous ARP replies</td></tr>
+  <tr><td><b>SMTP banner probing</b></td><td>Reconnaissance: connect to the mail port and read the server banner to fingerprint the software and version.</td><td>Short TCP sessions to port 25 with no mail sent</td></tr>
+  <tr><td><b>FTP brute force</b></td><td>Repeatedly guessing username and password pairs against port 21 until one works.</td><td>Many failed <code>USER</code>/<code>PASS</code> attempts from one source in a short time</td></tr>
+</table>
+
+<h2>Alerting</h2>
+<p>A script watches the alert log file and calls the Telegram Bot API whenever a new detection appears, so the responder gets the alert on their phone. Wireshark was used alongside the IDS to inspect and confirm each attack at packet level.</p>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>Different attacks leave very different footprints: size (PoD), identity mismatch (ARP), behaviour (banner probing) and frequency (brute force).</li>
+  <li>Explaining <em>how</em> an attack works made writing the detection logic much easier.</li>
+  <li>I practised splitting a security build across a team and presenting it clearly.</li>
+</ul></div>
+<div class="next"><span><a href="ftp-malware-detection.html">← Detecting Suspicious FTP File Transfers with Python and Telegram</a></span><span><a href="network-security-labs.html">Network Security Lab Series: Packets, TCP Flags and Email Protocols →</a></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>

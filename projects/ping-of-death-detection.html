@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detecting a Ping of Death with Snort and Telegram Alerts | Farah Qistina</title>
+<meta name="description" content="I generated oversized ICMP traffic in a contained lab, wrote a custom Snort signature to catch it, and connected the IDS to a Telegram bot so an alert reaches my phone within seconds.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Detection & defense</div>
+  <h1>Detecting a Ping of Death with Snort and Telegram Alerts</h1>
+  <p class="sub">I generated oversized ICMP traffic in a contained lab, wrote a custom Snort signature to catch it, and connected the IDS to a Telegram bot so an alert reaches my phone within seconds.</p>
+  <div class="meta"><div><span>Course</span><b>SKJ212 Ethical Hacking</b></div><div><span>Type</span><b>Hands-on lab</b></div><div><span>Environment</span><b>Kali Linux (isolated)</b></div></div>
+  <div class="chips"><span class="chip">Snort</span><span class="chip">Custom IDS rules</span><span class="chip">Wireshark</span><span class="chip">Bash</span><span class="chip">Telegram Bot API</span><span class="chip">Log monitoring</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>A Ping of Death sends ICMP packets far larger than normal to crash or freeze a host. I built the full detection pipeline: traffic generation → signature detection → live log monitoring → instant mobile alert.</div>
+
+<h2>Why this matters</h2>
+<p>Modern operating systems are patched against the original Ping of Death, but oversized and malformed ICMP traffic is still a common sign of reconnaissance, misconfiguration or denial-of-service attempts. A SOC analyst needs to <em>see</em> it quickly. This lab focuses on how quickly an alert can go from the wire to a human.</p>
+
+<h2>Detection pipeline</h2>
+<div class="flow">
+  <div class="n">Oversized ICMP<small>test traffic on loopback</small></div><span class="a">→</span>
+  <div class="n">Snort<small>custom signature</small></div><span class="a">→</span>
+  <div class="n">Alert log<small>/var/log/snort/alert</small></div><span class="a">→</span>
+  <div class="n">Bash watcher<small>tail + grep</small></div><span class="a">→</span>
+  <div class="n">Telegram bot<small>instant notification</small></div>
+</div>
+
+<h2>1. Writing the detection rule</h2>
+<p>Normal ping payloads are small (56–64 bytes by default). I wrote a signature that fires on any ICMP packet with a payload over 1,400 bytes, which is close to the size of a standard Ethernet frame and far above legitimate ping traffic:</p>
+<pre><code><span class="k">alert</span> icmp any any -> any any (
+    msg:<span class="y">"ICMP Ping of Death Detected"</span>;
+    dsize:>1400;
+    sid:1000001; rev:1;
+)</code></pre>
+<p>The rule lives in <code>local.rules</code>, which is included from <code>snort.conf</code>. Snort then runs in console-alert mode on the interface being watched.</p>
+
+<h2>2. Validating with test traffic</h2>
+<p>To prove the rule works, I sent oversized ICMP packets to localhost only, so no other machine was affected. Snort raised the alert straight away. I also captured the same traffic in Wireshark to confirm the payload size and the IP fragmentation pattern that oversized pings produce.</p>
+
+<h2>3. Real-time alerting to Telegram</h2>
+<p>A detection that nobody sees isn't much use. I wrote a small Bash helper that posts a message through the Telegram Bot API, then piped Snort's alert log into it:</p>
+<pre><code><span class="c"># telegram_alert.sh: send a message to the analyst's chat</span>
+TOKEN=<span class="y">"&lt;BOT_TOKEN&gt;"</span>
+CHAT_ID=<span class="y">"&lt;CHAT_ID&gt;"</span>
+curl -s -X POST <span class="y">"https://api.telegram.org/bot$TOKEN/sendMessage"</span> \
+     -d chat_id=<span class="y">"$CHAT_ID"</span> -d text=<span class="y">"$1"</span>
+
+<span class="c"># watch the IDS log and forward matching alerts</span>
+tail -Fn0 /var/log/snort/alert | while read line; do
+  echo <span class="y">"$line"</span> | grep -q <span class="y">"Ping of Death"</span> &amp;&amp; ./telegram_alert.sh <span class="y">"$line"</span>
+done</code></pre>
+
+<h2>Techniques practised</h2>
+<div class="grid2">
+  <div class="box"><h4>Signature-based detection</h4><p>Writing and tuning a Snort rule around a specific, measurable property (payload size).</p></div>
+  <div class="box"><h4>Anomaly reasoning</h4><p>Choosing a threshold that separates normal ping traffic from abuse.</p></div>
+  <div class="box"><h4>Packet analysis</h4><p>Checking the attack in Wireshark rather than trusting the alert alone.</p></div>
+  <div class="box"><h4>Log monitoring &amp; response</h4><p>Turning a log line into an actionable notification for incident response.</p></div>
+</div>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>A threshold rule is simple but needs justification. I can explain why I chose 1,400 bytes and what could cause false positives (for example, legitimate path-MTU testing).</li>
+  <li>Detection and notification are separate problems, and the second one is often where real SOCs lose time.</li>
+  <li>Keeping test traffic on loopback is a good habit: you prove the control works without putting anything else at risk.</li>
+</ul></div>
+<div class="next"><span><a href="pentest-proposal.html">← Penetration Testing Proposal for a Critical-Infrastructure Client</a></span><span><a href="credential-harvesting-detection.html">Credential Harvesting Detection over SMTP →</a></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>

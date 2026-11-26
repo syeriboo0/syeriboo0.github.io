@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartTCMS: Smart Test Case Management System | Farah Qistina</title>
+<meta name="description" content="Team project. We built a web application that helps small development teams create, run, track and report on test cases, designed with role-based security from the start.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Software & AI · Team project</div>
+  <h1>SmartTCMS: Smart Test Case Management System</h1>
+  <p class="sub">Team project. We built a web application that helps small development teams create, run, track and report on test cases, designed with role-based security from the start.</p>
+  <div class="meta"><div><span>Course</span><b>SKJ2083 Software Engineering</b></div><div><span>Team</span><b>Team project</b></div><div><span>Duration</span><b>14 weeks · Agile</b></div><div><span>Submitted</span><b>June 2025</b></div></div>
+  <div class="chips"><span class="chip">Python (Flask)</span><span class="chip">MySQL</span><span class="chip">HTML/CSS</span><span class="chip">UML</span><span class="chip">Git & GitHub</span><span class="chip">Postman</span><span class="chip">RBAC</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>Student teams often track testing in spreadsheets and chat messages. SmartTCMS gives them one place to manage projects, test cases, executions, history and reports, with separate permissions for Admin, Tester, Developer and Manager roles.</div>
+
+<h2>Core features</h2>
+<div class="grid2">
+  <div class="box"><h4>Authentication &amp; roles</h4><p>Secure login and registration with role-based access for Admin, Tester, Developer and Manager.</p></div>
+  <div class="box"><h4>Projects</h4><p>Create projects and drill into each one (for example, a "Mobile Banking" project) to see its test cases.</p></div>
+  <div class="box"><h4>Test cases</h4><p>Create, edit, run and delete test cases with module, priority, preconditions, steps and expected results.</p></div>
+  <div class="box"><h4>Review &amp; reports</h4><p>Developers comment on test cases, every change is logged to history, and summary reports can be generated.</p></div>
+</div>
+
+<h2>Architecture</h2>
+<div class="flow">
+  <div class="n">Browser<small>HTML / CSS</small></div><span class="a">→</span>
+  <div class="n">Web server<small>Python Flask</small></div><span class="a">→</span>
+  <div class="n">MySQL<small>persistent data</small></div>
+</div>
+<p>A standard three-tier web architecture. Users only interact with the front end, and the Flask server handles all logic and database access.</p>
+
+<h2>Data model</h2>
+<table>
+  <tr><th>Table</th><th>Key fields</th><th>Relationships</th></tr>
+  <tr><td>Users</td><td>user_id, name, username, password, role</td><td>creates test cases, records history and executions</td></tr>
+  <tr><td>TestCases</td><td>testcase_id, title, status, description, preconditions</td><td>linked to History, Executions, Reports</td></tr>
+  <tr><td>TestHistory</td><td>history_id, testcase_id, changed_by, change_date</td><td>audit trail of every change</td></tr>
+  <tr><td>Executions</td><td>execution_id, testcase_id, executed_by, result</td><td>pass/fail record per run</td></tr>
+  <tr><td>Reports</td><td>report_id, testcase_id, content, generated_date</td><td>summary output</td></tr>
+</table>
+
+<h2>Security design</h2>
+<ul>
+  <li>Test cases, bug reports and user logs are classified as <b>confidential</b>.</li>
+  <li><b>Role-based authorisation:</b> admins manage users and the system, while testers and developers get only what their role needs.</li>
+  <li><b>Audit logging</b> of user activity through the history table.</li>
+  <li>A defined <b>incident-reporting procedure</b> for suspicious activity.</li>
+</ul>
+
+<h2>Tools and process</h2>
+<p>We used the Agile model across the 14 weeks, Visual Studio Code for development, Git and GitHub for version control, Postman for API testing, MySQL Workbench for database design and UML for system design.</p>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>Turning requirements into an architecture, a data model and UI designs before writing code.</li>
+  <li>Applying security principles (classification, least privilege, audit trails) to a real system design.</li>
+  <li>Working in a team with Git, Agile sprints and shared documentation.</li>
+</ul></div>
+<div class="next"><span><a href="maghrib-prayer-reminder.html">← Maghrib Prayer Reminder: An Agentic AI Workflow</a></span><span><a href="nutripath.html">NutriPath: Health and Nutrition Tracking Web App →</a></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>

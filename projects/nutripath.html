@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriPath: Health and Nutrition Tracking Web App | Farah Qistina</title>
+<meta name="description" content="Team of 5. We built a Java web application that brings BMI, food logging, exercise tracking and goal progress together on one dashboard.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Software & AI · Team project</div>
+  <h1>NutriPath: Health and Nutrition Tracking Web App</h1>
+  <p class="sub">Team of 5. We built a Java web application that brings BMI, food logging, exercise tracking and goal progress together on one dashboard.</p>
+  <div class="meta"><div><span>Course</span><b>SKJ3013 Advanced Java Programming</b></div><div><span>Team</span><b>Team of 5</b></div><div><span>Session</span><b>2025/2026</b></div></div>
+  <div class="chips"><span class="chip">Java</span><span class="chip">Servlets</span><span class="chip">JSP</span><span class="chip">MVC</span><span class="chip">DAO pattern</span><span class="chip">MySQL</span><span class="chip">Apache Tomcat</span><span class="chip">Bootstrap</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>People who want to manage their health usually juggle several apps: one for BMI, one for food and one for exercise. NutriPath combines them. Users log meals and workouts, the app calculates BMI and net calories automatically, and a progress page charts weight trends against personal goals.</div>
+
+<h2>Problem → solution</h2>
+<table>
+  <tr><th>Problem</th><th>NutriPath feature</th></tr>
+  <tr><td>Health data spread across many tools</td><td>Central dashboard with weight, height and BMI</td></tr>
+  <tr><td>Calorie maths is tedious and easy to get wrong</td><td>Daily tracker that shows calories eaten minus calories burned automatically</td></tr>
+  <tr><td>People lose motivation over time</td><td>Goal setting with start and target dates, plus a line-graph progress review</td></tr>
+  <tr><td>Data must stay private</td><td>Separate user and admin logins with session handling</td></tr>
+</table>
+
+<h2>Architecture (MVC)</h2>
+<div class="flow">
+  <div class="n">View<small>JSP pages</small></div><span class="a">↔</span>
+  <div class="n">Controller<small>Java Servlets</small></div><span class="a">↔</span>
+  <div class="n">Model<small>Beans + DAO</small></div><span class="a">↔</span>
+  <div class="n">MySQL<small>persistence</small></div>
+</div>
+<div class="grid2">
+  <div class="box"><h4>View</h4><p>Login, signup, dashboard, daily tracker, goals, profile and progress-review pages. They handle presentation only, with no business logic.</p></div>
+  <div class="box"><h4>Controller</h4><p>Servlets for login and logout, profile, goals, food and exercise logging, deletion, and progress summaries.</p></div>
+  <div class="box"><h4>Model</h4><p>Beans (User, DailyFood, DailyExercise, Goal) carry the data. DAO classes keep all database access in one place.</p></div>
+  <div class="box"><h4>Runtime</h4><p>Built in Eclipse, deployed on Apache Tomcat, with MySQL storage and a Bootstrap front end.</p></div>
+</div>
+
+<h2>Testing</h2>
+<ul>
+  <li><b>Functional testing</b> checked that the servlet and JSP logic handles health data correctly, including BMI and net-calorie calculations.</li>
+  <li><b>UI testing</b> checked navigation, session persistence and that the layout stays consistent across pages.</li>
+</ul>
+
+<h2>Limitations and next steps</h2>
+<ul>
+  <li>Calories are entered by hand. An automated food database would improve accuracy.</li>
+  <li>A dedicated mobile app is planned as a future enhancement.</li>
+</ul>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>How a clean MVC split with the DAO pattern keeps a Java web app maintainable as it grows.</li>
+  <li>Handling sessions and role-separated logins in a servlet application.</li>
+  <li>Writing proper documentation (architecture, ERD, testing) alongside the code.</li>
+</ul></div>
+<div class="next"><span><a href="smarttcms.html">← SmartTCMS: Smart Test Case Management System</a></span><span></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>

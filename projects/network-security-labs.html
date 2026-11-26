@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Network Security Lab Series: Packets, TCP Flags and Email Protocols | Farah Qistina</title>
+<meta name="description" content="A series of hands-on labs: crafting custom packets, fingerprinting hosts by how they answer different TCP flag combinations, and analysing what email and HTTPS traffic reveals on the wire.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f766e'/><text x='50%' y='56%' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>FQ</text></svg>">
+<link rel="stylesheet" href="../assets/writeup.css">
+</head>
+<body>
+<nav><div class="in"><a class="logo" href="../index.html">Farah<span>.</span>sec</a><a class="back" href="../index.html#projects">← All projects</a></div></nav>
+<header class="hero"><div class="wrap">
+  <div class="cat">// Network security</div>
+  <h1>Network Security Lab Series: Packets, TCP Flags and Email Protocols</h1>
+  <p class="sub">A series of hands-on labs: crafting custom packets, fingerprinting hosts by how they answer different TCP flag combinations, and analysing what email and HTTPS traffic reveals on the wire.</p>
+  <div class="meta"><div><span>Course</span><b>Network Security</b></div><div><span>Type</span><b>Individual lab series</b></div><div><span>Labs</span><b>Packet crafting · TCP flags · SMTP/POP3 · TLS</b></div></div>
+  <div class="chips"><span class="chip">Python</span><span class="chip">Nping</span><span class="chip">Nmap</span><span class="chip">Wireshark</span><span class="chip">OpenSSL</span><span class="chip">SMTP</span><span class="chip">POP3</span><span class="chip">IMAP</span><span class="chip">TLS</span></div>
+</div></header>
+<main><div class="wrap"><article>
+<div class="tldr"><b>Summary</b>Four labs that built my packet-level understanding. I sent ICMP/UDP/TCP packets with custom payloads, compared eight Nmap scan types against one host, and captured SMTP, POP3, IMAP and HTTPS sessions to see which protocols expose data in the clear.</div>
+
+<h2>Lab 1: Crafting custom packets</h2>
+<p>I wrote a Python program that sends a custom payload (<code>"Hello, this is a try!"</code>) over <b>ICMP, UDP and TCP</b>, then repeated the test from the command line with Nping against the default gateway:</p>
+<pre><code>nping --icmp --data-string <span class="y">"hello everyone"</span> &lt;gateway&gt;
+nping --udp  --data-string <span class="y">"hello everyone"</span> &lt;gateway&gt;
+nping --tcp  --data-string <span class="y">"hello everyone"</span> &lt;gateway&gt;</code></pre>
+<p>Capturing these in Wireshark showed exactly where the payload sits in each protocol's packet structure.</p>
+
+<h2>Lab 3: TCP flag behaviour and host fingerprinting</h2>
+<p>I scanned the same host with eight Nmap techniques and recorded how it answered each flag combination:</p>
+<table>
+  <tr><th>Scan</th><th>Flags sent</th><th>Response</th><th>Interpretation</th></tr>
+  <tr><td>TCP Connect (<code>-sT</code>)</td><td>SYN → SYN-ACK → ACK</td><td>No response</td><td>Likely filtered by firewall/ACL</td></tr>
+  <tr><td>SYN (<code>-sS</code>)</td><td>SYN</td><td>RST</td><td>Port closed</td></tr>
+  <tr><td>FIN (<code>-sF</code>)</td><td>FIN</td><td>RST</td><td>Closed (RFC 793 behaviour)</td></tr>
+  <tr><td>NULL (<code>-sN</code>)</td><td>none</td><td>RST</td><td>Closed (RFC 793 behaviour)</td></tr>
+  <tr><td>Xmas (<code>-sX</code>)</td><td>FIN, PSH, URG</td><td>RST</td><td>Closed (RFC 793 behaviour)</td></tr>
+  <tr><td>ACK (<code>-sA</code>)</td><td>ACK</td><td>RST</td><td>Unfiltered</td></tr>
+  <tr><td>Window (<code>-sW</code>)</td><td>ACK + window check</td><td>No response</td><td>Filtered or unsupported</td></tr>
+  <tr><td>Maimon (<code>-sM</code>)</td><td>FIN, ACK</td><td>RST</td><td>Closed</td></tr>
+</table>
+<h3>Findings</h3>
+<ul>
+  <li>No reply to the Connect and Window scans points to filtering.</li>
+  <li>The same RST reply to FIN, NULL and Xmas scans shows RFC-compliant TCP behaviour, which helps fingerprint the target OS.</li>
+  <li>The ACK scan is the clearest way to check <em>filtering</em> without probing service state.</li>
+  <li>FIN, NULL and Xmas scans can slip past basic firewalls that only block SYN packets. That's why defenders should use stateful inspection.</li>
+</ul>
+
+<h2>Labs 4 &amp; 5: Email and TLS traffic analysis</h2>
+<ul>
+  <li>Sent email with Python over <b>SMTP</b> and read it back over <b>POP3</b> using a Mailtrap sandbox inbox.</li>
+  <li>Used <b>OpenSSL</b> (<code>s_client</code>) to open TLS connections to HTTPS sites and to mail servers. I captured each handshake in Wireshark and compared what is visible before and after encryption.</li>
+  <li>Captured SMTP and IMAP sessions for both Mailtrap and Gmail, then tried to decode the email in Wireshark. Unencrypted sessions gave up their content; TLS-protected sessions did not.</li>
+</ul>
+
+<h2>What I learned</h2>
+<div class="learned"><ul>
+  <li>I can read a TCP conversation flag by flag and explain what each response says about the target.</li>
+  <li>Scan choice is a trade-off between stealth, speed and the information you get back.</li>
+  <li>TLS changes what a network observer can see, and Wireshark makes that difference easy to show to non-technical people.</li>
+</ul></div>
+<div class="next"><span><a href="network-security-project.html">← Internet Network Security Project: Lightweight IDS with Telegram Alerting</a></span><span><a href="maghrib-prayer-reminder.html">Maghrib Prayer Reminder: An Agentic AI Workflow →</a></span></div>
+</article></div></main>
+<footer>© 2026 Farah Qistina Aleeya binti Mohd Fadhli · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>
