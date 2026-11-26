@@ -38,7 +38,9 @@ nav ul a:hover{color:var(--ink);text-decoration:none}
 .hero .wrap{display:grid;grid-template-columns:1.35fr .9fr;gap:56px;align-items:center}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:999px}
 .dot{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.18)}
-h1{font-size:clamp(36px,5vw,54px);line-height:1.08;letter-spacing:-.035em;margin:18px 0 16px}
+h1{font-size:clamp(40px,5.4vw,58px);line-height:1.05;letter-spacing:-.035em;margin:18px 0 10px}
+.tagline{font-size:clamp(22px,2.6vw,28px);font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:16px;max-width:600px}
+.tagline em{font-style:normal;color:var(--accent)}
 h1 em{font-style:normal;color:var(--accent)}
 .lead{font-size:18px;color:var(--muted);max-width:560px}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
@@ -122,9 +124,11 @@ h2{font-size:clamp(28px,3.4vw,36px);letter-spacing:-.03em;line-height:1.15;margi
 .hide{display:none}
 
 /* certs */
-.certs{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .cert{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:8px}
 .alt .cert{background:var(--bg)}
+.cert:hover{box-shadow:0 8px 24px rgba(15,27,45,.08);transform:translateY(-2px)}
+.cert{transition:.18s}
 .cert .thumb{aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--line)}
 .cert .thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
 .cert .icon{aspect-ratio:4/3;border-radius:10px;display:grid;place-items:center;font-size:40px;font-weight:800}
@@ -187,9 +191,10 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="eyebrow"><span class="dot"></span>Open to industrial training · 2027</span>
-      <h1>Hi, I'm Farah.<br>I break things <em>to secure them.</em></h1>
-      <p class="lead">Computer Science (Information Security &amp; Assurance) student at Universiti Sains Islam Malaysia, building hands-on skills in penetration testing, intrusion detection and network security, and growing into cloud security.</p>
+      <span class="eyebrow"><span class="dot"></span>Open to Industrial Training · 2027</span>
+      <h1>Hi, I'm Farah.</h1>
+      <p class="tagline">Making digital environments more <em>secure, resilient, and compliant.</em></p>
+      <p class="lead">Computer Science (Information Security &amp; Assurance) student at Universiti Sains Islam Malaysia (USIM), with a growing interest in Governance, Risk &amp; Compliance (GRC), cloud security, and information security. I enjoy exploring how organisations manage cybersecurity risks, protect digital infrastructure, and build secure, compliant technology environments.</p>
       <div class="cta">
         <a class="btn btn-primary" href="#projects">View my projects →</a>
         <a class="btn btn-ghost" href="mailto:farahqqisy@gmail.com">Email me</a>
@@ -212,7 +217,7 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
         <div><span class="p">farah@usim</span>:~$ whoami</div>
         <div>security student · builder</div>
         <div><span class="p">farah@usim</span>:~$ cat interests.txt</div>
-        <div><span class="k">cloud</span> · <span class="k">cyber security</span> · <span class="k">GRC</span> · <span class="k">data</span></div>
+        <div><span class="k">GRC</span> · <span class="k">cloud security</span> · <span class="k">infosec</span></div>
         <div><span class="p">farah@usim</span>:~$ <span style="opacity:.6">_</span></div>
       </div>
     </aside>
@@ -225,8 +230,8 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
     <div class="about">
       <div>
         <p>I'm a Computer Science student majoring in Information Security and Assurance at USIM. My coursework and labs have taken me from attacking vulnerable machines with Kali Linux and Metasploit to writing Snort rules that catch those same attacks and push real-time alerts to Telegram.</p>
-        <p>I also like building things people use. My mental-health app <a href="#mindsync">MindSync</a>, built under the supervision of Dr. Hanifah Abdul Hamid, won a Bronze medal at SciTEx 2026, and I've shipped team projects in Java, web development and agentic AI automation.</p>
-        <p>I'm now looking for an industrial training placement in <b>cloud, cyber security, GRC or data analytics</b> where I can learn from real environments and contribute from day one.</p>
+        <p>I also like building things people use. My final year project, <a href="#mindsync">MindSync</a>, a mental-health web app built under the supervision of Dr. Hanifah Abdul Hamid, won a Bronze medal at SciTEx 2026, and I've shipped team projects in Java, web development and agentic AI automation.</p>
+        <p>I'm now looking for an industrial training placement in <b>GRC, cloud security or information security</b> where I can learn from real environments and contribute from day one.</p>
       </div>
       <div class="skills">
         <div class="skill-group"><h4>Offensive security</h4><div class="chips"><span class="chip">Kali Linux</span><span class="chip">Metasploit</span><span class="chip">Nmap</span><span class="chip">hping3</span><span class="chip">SQL injection</span><span class="chip">Pentest reporting</span></div></div>
@@ -240,10 +245,10 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 
 <section id="mindsync">
   <div class="wrap">
-    <div class="sec-head"><div class="tag">// featured project</div><h2>MindSync</h2></div>
+    <div class="sec-head"><div class="tag">// final year project</div><h2>MindSync</h2></div>
     <div class="featured">
       <div class="txt">
-        <span class="badge">🥉 Bronze Medal · SciTEx 2026</span>
+        <span class="badge">🎓 Final Year Project</span> <span class="badge">🥉 Bronze Medal · SciTEx 2026</span>
         <h3>A mood journal with an AI companion</h3>
         <p>MindSync is an installable web app (PWA) for tracking mental health. Users log their mood, chat with <b>Moodie</b>, an AI companion, and get weekly insights into their emotional patterns.</p>
         <ul>
@@ -253,8 +258,7 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
           <li>Deployed on Cloudflare as an installable PWA</li>
         </ul>
         <div class="chips"><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Firebase Auth</span><span class="chip">Firestore</span><span class="chip">Cloudflare</span><span class="chip">Gemini API</span></div>
-        <!-- TODO: add links when ready, e.g.
-        <div class="links" style="margin-top:22px"><a href="https://YOUR-LIVE-LINK" target="_blank" style="color:#5eead4">Live app ↗</a><a href="https://github.com/YOUR-USERNAME/mindsync" target="_blank" style="color:#5eead4">Source ↗</a></div> -->
+        <div class="links" style="margin-top:22px"><a class="btn" href="https://mindsync-web.pages.dev" target="_blank" rel="noopener" style="background:#2dd4bf;color:#0f1b2d">Try MindSync live ↗</a></div>
               </div>
       <div class="visual" aria-hidden="true">
         <!-- TODO: replace this illustration with a real screenshot: <img src="img/mindsync.png" alt="MindSync app"> -->
@@ -427,27 +431,31 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
   <div class="wrap">
     <div class="sec-head"><div class="tag">// awards &amp; certificates</div><h2>Recognition</h2></div>
     <div class="certs">
-      <div class="cert">
-        <div class="icon" style="background:#fef3c7;color:#b45309">🥉</div>
-        <h4>Bronze Medal, SciTEx 2026</h4><span>For MindSync · Science &amp; Technology Research Expo, USIM · Oct 2026</span>
-      </div>
-      <div class="cert">
-        <div class="icon" style="background:#e0e7ff;color:#3730a3">🛡️</div>
-        <h4>Committee Member, ISAS'26</h4><span>16th Information Security Assurance Seminar, USIM · Oct 2026</span>
-      </div>
-      <div class="cert">
-        <div class="icon" style="background:#fef3c7;color:#b45309">★</div>
-        <h4>Best Subject: Physics (STPM)</h4><span>KTE Sultan Abdul Aziz</span>
-      </div>
-      <div class="cert">
-        <div class="icon" style="background:var(--accent-soft);color:var(--accent)">4.0</div>
-        <h4>MUET Band 4.0</h4><span>Malaysian University English Test</span>
-      </div>
-      <!-- TODO: add new certificates here, e.g.
-      <div class="cert">
-        <div class="icon" style="background:#fff7ed;color:#c2410c">AWS</div>
-        <h4>AWS Certified Cloud Practitioner</h4><span>Amazon Web Services · 2027</span>
-      </div> -->
+      <a class="cert" href="img/certs/scitex.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/scitex-thumb.jpg" alt="Bronze Medal, SciTEx 2026 certificate" loading="lazy"></div>
+        <h4>Bronze Medal, SciTEx 2026</h4><span>For MindSync (FYP) · USIM · Oct 2026</span>
+      </a>
+      <a class="cert" href="img/certs/isas26.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/isas26-thumb.jpg" alt="Committee Member, ISAS'26 certificate" loading="lazy"></div>
+        <h4>Committee Member, ISAS'26</h4><span>16th Information Security Assurance Seminar · Oct 2026</span>
+      </a>
+      <a class="cert" href="img/certs/cyberhasanat.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/cyberhasanat-thumb.jpg" alt="Committee, Cyber Hasanat (SULAM) certificate" loading="lazy"></div>
+        <h4>Committee, Cyber Hasanat (SULAM)</h4><span>AI-Driven Cybersecurity · USIM × UNESCO Malaysia · Jun 2025</span>
+      </a>
+      <a class="cert" href="img/certs/kksi.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/kksi-thumb.jpg" alt="Secretariat, JAKSA KKSI certificate" loading="lazy"></div>
+        <h4>Secretariat, JAKSA KKSI</h4><span>Kolej Kediaman Sutera Indah, USIM · 2024/2025</span>
+      </a>
+      <a class="cert" href="img/certs/stpm.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/stpm-thumb.jpg" alt="Best STPM Subject: Physics certificate" loading="lazy"></div>
+        <h4>Best STPM Subject: Physics</h4><span>KTE Sultan Abdul Aziz · 2022</span>
+      </a>
+      <a class="cert" href="img/certs/muet.jpg" target="_blank" style="color:inherit;text-decoration:none">
+        <div class="thumb"><img src="img/certs/muet-thumb.jpg" alt="MUET Band 4.0 certificate" loading="lazy"></div>
+        <h4>MUET Band 4.0</h4><span>Malaysian Examinations Council · Session 3, 2022</span>
+      </a>
+      <!-- TODO: add new certificates here: put the image in img/certs/ and copy one block above -->
     </div>
   </div>
 </section>
@@ -459,8 +467,8 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
         <div class="sec-head"><div class="tag">// experience &amp; leadership</div><h2>Experience</h2></div>
         <div class="tl">
           <div><span class="when">Oct 2026</span><b>Committee Member, ISAS'26</b><p>16th Information Security Assurance Seminar, "Synthetic Criminals: AI Deepfakes and Emerging Cybercrime Trends", Faculty of Science and Technology, USIM.</p></div>
-          <div><span class="when">USIM</span><b>Committee Member, AI-Driven Cybersecurity Through Cyber Hasanat</b></div>
-          <div><span class="when">USIM</span><b>Secretariat, Kolej Kediaman Sutera Indah</b><p>Residential college committee.</p></div>
+          <div><span class="when">Jun 2025</span><b>Committee Member, AI-Driven Cybersecurity Through Cyber Hasanat for Sustainable Digital Communities</b><p>Service-Learning University of Society (SULAM) programme by the Information Security and Assurance Programme, USIM, with the Malaysian National Commission for UNESCO, held at Sekolah Agama Menengah Sungai Merab Luar. Theme: "Teknologi Disantuni, Mengukuh Amal Beretika".</p></div>
+          <div><span class="when">2024 / 2025</span><b>Secretariat, JAKSA Kolej Kediaman Sutera Indah</b><p>Student committee of the Sutera Indah residential college, USIM, for the 2024/2025 academic session.</p></div>
           <div><span class="when">Mar – Oct 2021</span><b>Data Entry Assistant (part-time), Warisan Jeram Enterprise</b><p>Entered tender documents, bills of quantities and pricing submissions into e-procurement systems.</p></div>
         </div>
       </div>
@@ -468,7 +476,7 @@ footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
         <div class="sec-head"><div class="tag">// education</div><h2>Education</h2></div>
         <div class="tl">
           <div><span class="when">Current</span><b>Bachelor of Computer Science (Information Security &amp; Assurance) with Honours</b><p>Universiti Sains Islam Malaysia (USIM), Faculty of Science and Technology · CGPA 3.83</p></div>
-          <div><span class="when">2021 – 2023</span><b>Sijil Tinggi Persekolahan Malaysia (STPM)</b><p>KTE Sultan Abdul Aziz · Best Subject Award (Physics)</p></div>
+          <div><span class="when">2021 – 2023</span><b>Sijil Tinggi Persekolahan Malaysia (STPM)</b><p>Kolej Tingkatan Enam Sultan Abdul Aziz, Kuala Selangor · Best STPM Subject Award (Physics), 2022</p></div>
         </div>
       </div>
     </div>
